@@ -5,7 +5,7 @@ set autoread
 set hidden
 set showcmd
 
-" 見た目系
+" Appearance option
 set number
 set cursorline
 set cursorcolumn
@@ -19,13 +19,13 @@ nnoremap j gj
 nnoremap k gk
 colorscheme molokai
 
-" Tab系
+" Tab option
 set list listchars=tab:\▸\-
 set expandtab
 set tabstop=2
 set shiftwidth=2
 
-" 検索系
+" Search option
 set ignorecase
 set smartcase
 set incsearch
@@ -33,7 +33,7 @@ set wrapscan
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-" 起動したときの処理
+" Initialize
 autocmd VimEnter * execute 'NERDTree'
 
 "dein Scripts-----------------------------
