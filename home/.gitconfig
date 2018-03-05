@@ -1,20 +1,18 @@
 [user]
-	name = y0n0zawa
-	email = yoshitomo.onozawa@gmail.com
-
+  name = y0n0zawa
+  email = yoshitomo.onozawa@gmail.com
 [ghq]
   root = ~/Source
-
 [alias]
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
   b = branch -a
   br = browse-remote
-  ci = commit 
+  ci = commit
   co = checkout
   d = diff
   delete-merged-branches = !git branch --merged | grep -vE \"^\\*|master$|develop$\" | xargs -I % git branch -d %
   dc = diff --cached
-  di = diff   
+  di = diff
   dic = diff --cached
   f = fetch --prune
   fs = !git f && git su
@@ -27,11 +25,11 @@
   lp = log --oneline -n 20 -p
   ls = log --stat --abbrev-commit -n 1 # display previous log
   s = status --short --branch
-  st = status 
+  st = status
   su = submodule update
   show-pull-request = "!f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
 [core]
   editor = vim
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [commit]
-	template = ~/.stCommitMsg
+  template = ~/.stCommitMsg
