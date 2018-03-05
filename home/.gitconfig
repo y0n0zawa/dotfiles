@@ -31,5 +31,5 @@
 [core]
   editor = vim
   excludesfile = ~/.gitignore_global
-[commit]
-  template = ~/.stCommitMsg
+[include]
+  path = ./.gitconfig_local
