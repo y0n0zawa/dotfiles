@@ -5,3 +5,10 @@ set stage-view = line-number:yes,interval=1 text
 set log-view   = line-number:yes,interval=1 text
 set blob-view  = line-number:yes,interval=1 text
 set diff-view  = line-number:yes,interval=1 text:yes,commit-title-overflow=no
+
+bind generic ^ !@hub browse
+bind generic - !@hub browse -- issues
+bind generic ~ !@hub browse -- commit/%(commit)
+bind generic = !hub ci-status %(commit)
+bind branch  [ !@hub compare %(branch)
+bind main    w !hub pull-request
