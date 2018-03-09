@@ -40,3 +40,7 @@ if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
+
+# golang
+GOPATH=~/go
+PATH=$GOPATH/bin:$PATH
