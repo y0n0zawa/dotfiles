@@ -24,6 +24,8 @@ nnoremap <Up>   gk
 nnoremap gj j
 nnoremap gk k
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+
+" Color scheme
 colorscheme molokai
 
 " Tab option
