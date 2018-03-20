@@ -15,8 +15,14 @@ set visualbell
 set showmatch
 set laststatus=2
 set wildmode=list:longest
+
+" Keymap setting
 nnoremap j gj
 nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up>   gk
+nnoremap gj j
+nnoremap gk k
 colorscheme molokai
 
 " Tab option
