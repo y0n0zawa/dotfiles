@@ -60,6 +60,7 @@ if dein#load_state('~/.cache/dein')
   " Use plugin
   call dein#add('scrooloose/nerdtree')
   call dein#add('tpope/vim-rails')
+  call dein#add('tpope/vim-endwise')
 
   " Let dein manage dein
   " Required:
