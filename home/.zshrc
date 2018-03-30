@@ -44,3 +44,6 @@ fi
 # golang
 GOPATH=~/go
 PATH=$GOPATH/bin:$PATH
+
+# nvim
+XDG_CONFIG_HOME=~/.config
