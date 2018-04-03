@@ -25,6 +25,24 @@ nnoremap gj j
 nnoremap gk k
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
+" Unite settings
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
+nmap <Space> [unite]
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
+nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction"}}}
+
 " Color scheme
 colorscheme molokai
 
@@ -67,6 +85,8 @@ if dein#load_state('~/.cache/dein')
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('tpope/vim-fugitive')
