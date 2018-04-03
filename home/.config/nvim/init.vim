@@ -77,6 +77,13 @@ if dein#load_state('~/.cache/dein')
   " Required:
   call dein#end()
   call dein#save_state()
+
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+  let g:deoplete#enable_at_startup = 1
 endif
 
 " Required:
