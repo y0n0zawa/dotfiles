@@ -44,7 +44,8 @@ function! s:unite_my_settings()"{{{
 endfunction"}}}
 
 " Color scheme
-colorscheme molokai
+set background=dark
+colorscheme hybrid
 
 " Tab option
 set list listchars=tab:\▸\-
