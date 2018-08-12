@@ -45,7 +45,7 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 # golang
-GOPATH=~/go
+export GOPATH=$HOME
 PATH=$GOPATH/bin:$PATH
 
 # nvim
