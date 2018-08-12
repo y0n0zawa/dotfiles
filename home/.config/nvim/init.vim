@@ -51,7 +51,10 @@ colorscheme hybrid
 set list listchars=tab:\▸\-
 set expandtab
 set tabstop=2
+set softtabstop=2
 set shiftwidth=2
+set autoindent
+set copyindent
 
 " Search option
 set ignorecase
