@@ -2,7 +2,7 @@
   name = y0n0zawa
   email = yoshitomo.onozawa@gmail.com
 [ghq]
-  root = ~/src
+  root = ~/dev/src
 [alias]
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
   b = branch -a
