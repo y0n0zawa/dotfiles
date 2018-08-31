@@ -1,6 +1,3 @@
-# alias commands
-alias vim=nvim
-
 # Set option
 setopt nonomatch
 
