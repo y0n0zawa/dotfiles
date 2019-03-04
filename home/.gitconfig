@@ -30,7 +30,7 @@
   su = submodule update
   show-pull-request = "!f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
 [core]
-  editor = nvim
+  editor = vim
   excludesfile = ~/.gitignore_global
 [include]
   path = ./.gitconfig_local
