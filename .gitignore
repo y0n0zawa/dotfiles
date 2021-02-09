@@ -56,3 +56,7 @@ homesick*.gem
 home/.vim/bundle/.cache/
 home/.vim/bundle/cache_vim
 home/.vim/bundle/state_vim.vim
+
+# configs
+home/.config/
+
