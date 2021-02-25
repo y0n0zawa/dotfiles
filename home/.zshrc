@@ -53,3 +53,7 @@ PATH=$GOPATH/bin:$PATH
 
 # nvim
 XDG_CONFIG_HOME=~/.config
+
+# auto suggestions
+source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+

@@ -65,7 +65,7 @@ set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 " Initialize
-autocmd VimEnter * execute 'NERDTree'
+" autocmd VimEnter * execute 'NERDTree'
 
 "dein Scripts-----------------------------
 if &compatible
