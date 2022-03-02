@@ -57,3 +57,8 @@ XDG_CONFIG_HOME=~/.config
 # auto suggestions
 source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
+
+# asdf plugin
+. /usr/local/opt/asdf/libexec/asdf.sh
+. ~/.asdf/plugins/java/set-java-home.zsh
+
