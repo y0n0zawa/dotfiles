@@ -10,7 +10,7 @@
   ci = commit
   co = checkout
   d = diff
-  delete-merged-branches = !git branch --merged | grep -vE \"^\\*|master$|develop$\" | xargs -I % git branch -d %
+  delete-merged-branches = !git branch --merged | grep -vE \"^\\*|main$|master$|develop$\" | xargs -I % git branch -d %
   dc = diff --cached
   di = diff
   dic = diff --cached
