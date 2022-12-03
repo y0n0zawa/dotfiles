@@ -38,17 +38,8 @@ function peco-history-selection() {
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
-# anyenv
-if [ -d $HOME/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-fi
-
 # golang
-export GOENV_DISABLE_GOPATH=1
-export GO111MODULE=on
 export GOPATH=${HOME}/dev
-export GOROOT=${HOME}/.anyenv/envs/goenv/versions/`goenv version`
 PATH=$GOPATH/bin:$PATH
 
 # nvim
@@ -57,8 +48,13 @@ XDG_CONFIG_HOME=~/.config
 # auto suggestions
 source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
+# homebrew
+eval "$(homebrew/bin/brew shellenv)"
+brew update --force --quiet
+chmod -R go-w "$(brew --prefix)/share/zsh"
 
 # asdf plugin
-. /usr/local/opt/asdf/libexec/asdf.sh
-. ~/.asdf/plugins/java/set-java-home.zsh
+. ~/homebrew/opt/asdf/libexec/asdf.sh
 
+# aws auto complete
+. ~/homebrew/share/zsh/site-functions
