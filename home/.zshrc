@@ -6,10 +6,6 @@ if [ -f ~/.zprofile ]; then
     source ~/.zprofile
 fi
 
-# ============================================================================
-# Git Repository Management
-# ============================================================================
-
 # Select and navigate to a git repository
 # Usage: g
 # Description: Select and navigate to a git repository using ghq and peco
@@ -36,10 +32,6 @@ function b() {
   fi
 }
 
-# ============================================================================
-# Command History Management
-# ============================================================================
-
 # Search and select from command history
 # Usage: r
 # Description: Search and select from command history
@@ -55,10 +47,6 @@ function r() {
     print -z "$selected_command"
   fi
 }
-
-# ============================================================================
-# GitHub Integration
-# ============================================================================
 
 # Open GitHub repository in browser
 # Usage: h
