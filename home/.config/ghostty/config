@@ -1,0 +1,7 @@
+# cmux 内蔵 Ghostty 用の設定。
+
+# h (hub browse) 用キーバインド。
+# Ctrl+h は端末上で Backspace(^H) と同一バイトのため使えない。
+# そこで cmd+ctrl+h に割り当て、専用エスケープシーケンス ESC[102~ を zsh へ送る。
+# zsh 側 (~/.zshrc) の bindkey '\e[102~' したウィジェットが起動する。
+keybind = cmd+ctrl+h=text:\x1b[102~

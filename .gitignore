@@ -58,5 +58,7 @@ home/.vim/bundle/cache_vim
 home/.vim/bundle/state_vim.vim
 
 # configs
-home/.config/
+home/.config/*
+!home/.config/cmux
+!home/.config/ghostty
 
