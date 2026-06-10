@@ -1,6 +1,6 @@
 [user]
-  name = y0n0zawa
-  email = yoshitomo.onozawa@gmail.com
+	name = y0n0zawa
+	email = yoshitomo.onozawa@gmail.com
 [ghq]
   root = ~/dev/src
 [alias]
@@ -10,7 +10,7 @@
   ci = commit
   co = checkout
   d = diff
-  delete-merged-branches = !git branch --merged | grep -vE \"^\\*|main$|master$|develop$\" | xargs -I % git branch -d %
+  delete-merged-branches = !git branch --merged | grep -vE \"^\\*|^\\+|main$|master$|develop$\" | xargs -I % git branch -d %
   dc = diff --cached
   di = diff
   dic = diff --cached
@@ -31,6 +31,14 @@
   show-pull-request = "!f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
 [core]
   editor = vim
-  excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [include]
   path = ./.gitconfig_local
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = ~/.stCommitMsg
