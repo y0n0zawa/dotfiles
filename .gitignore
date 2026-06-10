@@ -61,4 +61,5 @@ home/.vim/bundle/state_vim.vim
 home/.config/*
 !home/.config/cmux
 !home/.config/ghostty
+!home/.config/sheldon
 
