@@ -63,3 +63,9 @@ home/.config/*
 !home/.config/ghostty
 !home/.config/sheldon
 
+# machine-local / secret settings (never commit)
+.zshrc.local
+home/.zshrc.local
+.zprofile.local
+home/.zprofile.local
+
