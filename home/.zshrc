@@ -25,14 +25,23 @@ fi
 # Load local file
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
+# ghq のフルパスを「前半=淡色 / owner=シアン / repo=黄」に色分けする (fzf --ansi 用)
+function _ghq_fzf_color() {
+  sed -E $'s#^(.*)/([^/]+)/([^/]+)$#\033[2m\\1/\033[0m\033[1;36m\\2\033[0m\033[2m/\033[0m\033[1;33m\\3\033[0m#'
+}
+
+# 履歴行を色分けする: コマンド=緑 / オプション=シアン / 演算子=マゼンタ / パス=青 (fzf --ansi 用)
+# ANSI を挿入するだけで他の文字は変えないため、fzf --ansi が剥がすと元コマンドに一致 (実行は壊れない)
+function _hist_fzf_color() {
+  perl -pe 's{(^\s*\S+)|(--?\w[\w-]*)|(\|\||&&|[|;&><]+)|(\S*/\S*)}{defined($1)?"\033[1;32m$1\033[0m":defined($2)?"\033[36m$2\033[0m":defined($3)?"\033[1;35m$3\033[0m":"\033[34m$4\033[0m"}ge'
+}
+
 # Select and navigate to a git repository
 # Usage: g
-# Description: Select and navigate to a git repository using ghq and peco
-# - Lists all repositories managed by ghq
-# - Uses peco for interactive selection
-# - Changes directory to the selected repository
+# Description: ghq 管理リポジトリを fzf (色付きパス) で選んで cd する
 function g() {
-  local selected_repo=$(ghq list -p | peco --query "$LBUFFER")
+  local selected_repo
+  selected_repo=$(ghq list -p | _ghq_fzf_color | fzf --ansi --reverse --query "$LBUFFER")
   if [ -n "$selected_repo" ]; then
     cd "$selected_repo"
   fi
@@ -55,12 +64,12 @@ function b() {
 # Usage: r
 # Description: Search and select from command history
 # - Removes duplicate commands
-# - Uses peco for interactive selection
+# - Uses fzf (--ansi) for interactive selection
 # - Places selected command in the current prompt
 # - Press Enter to execute the selected command
 function r() {
   local selected_command
-  selected_command=$(history -n 1 | tail -n +1 | awk '!a[$0]++' | peco)
+  selected_command=$(history -n 1 | tail -n +1 | awk '!a[$0]++' | _hist_fzf_color | fzf --ansi --reverse)
   
   if [ -n "$selected_command" ]; then
     print -z "$selected_command"
@@ -69,14 +78,12 @@ function r() {
 
 # Open GitHub repository in browser
 # Usage: h
-# Description: Open GitHub repository in browser using hub
-# - Selects repository from ghq list using peco
-# - Extracts repository name from full path
-# - Opens repository in default browser using hub browse
+# Description: ghq 管理リポジトリを fzf (色付きパス) で選んで hub browse する
 function h() {
-  local selected_repo=$(ghq list -p | peco --query "$LBUFFER" | rev | cut -d "/" -f -2 | rev)
-  if [ -n "$selected_repo" ]; then
-    hub browse "$selected_repo"
+  local selected_path
+  selected_path=$(ghq list -p | _ghq_fzf_color | fzf --ansi --reverse --query "$LBUFFER")
+  if [ -n "$selected_path" ]; then
+    hub browse "$(print -r -- "$selected_path" | rev | cut -d "/" -f -2 | rev)"
   fi
 }
 
@@ -103,27 +110,27 @@ eval "$(sheldon source)"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ──────────────────────────────────────────────────────────────
-# Ctrl+r / Ctrl+g で peco ランチャー (r / g 相当) を起動する
+# Ctrl+r / Ctrl+g でランチャー起動 (いずれも fzf 色付き, r / g 相当)
 # (typed の r / g / h コマンドはそのまま併用可)
 # ──────────────────────────────────────────────────────────────
 
-# Ctrl+r: コマンド履歴を peco で検索し、選んだものを入力行へ展開する (r 相当)
-function _zle_peco_history() {
+# Ctrl+r: コマンド履歴を fzf (色付き) で検索し、選んだものを入力行へ展開する (r 相当)
+function _zle_fzf_history() {
   local selected
-  selected=$(history -n 1 | tail -n +1 | awk '!a[$0]++' | peco)
+  selected=$(history -n 1 | tail -n +1 | awk '!a[$0]++' | _hist_fzf_color | fzf --ansi --reverse --query "$LBUFFER")
   if [[ -n "$selected" ]]; then
     BUFFER="$selected"
     CURSOR=$#BUFFER
   fi
   zle reset-prompt
 }
-zle -N _zle_peco_history
-bindkey '^R' _zle_peco_history
+zle -N _zle_fzf_history
+bindkey '^R' _zle_fzf_history
 
-# Ctrl+g: ghq 管理のリポジトリを peco で選んで cd する (g 相当)
+# Ctrl+g: ghq 管理のリポジトリを fzf (色付きパス) で選んで cd する (g 相当)
 function _zle_ghq_cd() {
   local selected
-  selected=$(ghq list -p | peco --query "$LBUFFER")
+  selected=$(ghq list -p | _ghq_fzf_color | fzf --ansi --reverse --query "$LBUFFER")
   if [[ -n "$selected" ]]; then
     BUFFER="cd ${(q)selected}"
     zle accept-line
@@ -134,14 +141,15 @@ function _zle_ghq_cd() {
 zle -N _zle_ghq_cd
 bindkey '^G' _zle_ghq_cd
 
-# cmd+ctrl+h: ghq 管理のリポジトリを peco で選んで hub browse する (h 相当)
+# cmd+ctrl+h: ghq 管理のリポジトリを fzf (色付き) で選んで hub browse する (h 相当)
 # Ctrl+h は Backspace(^H) と衝突するため cmd+ctrl+h を使用。
 # cmux(内蔵 Ghostty)が cmd+ctrl+h を ESC[102~ に変換して送る (~/.config/ghostty/config)
 function _zle_ghq_browse() {
-  local selected
-  selected=$(ghq list -p | peco --query "$LBUFFER" | rev | cut -d "/" -f -2 | rev)
+  local selected owner_repo
+  selected=$(ghq list -p | _ghq_fzf_color | fzf --ansi --reverse --query "$LBUFFER")
   if [[ -n "$selected" ]]; then
-    BUFFER="hub browse ${(q)selected}"
+    owner_repo=$(print -r -- "$selected" | rev | cut -d "/" -f -2 | rev)
+    BUFFER="hub browse ${(q)owner_repo}"
     zle accept-line
   else
     zle reset-prompt
