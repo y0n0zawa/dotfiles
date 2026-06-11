@@ -7,6 +7,13 @@ fi
 
 setopt nonomatch
 
+# History (Warp 風補完の土台: 共有履歴・重複除去・先読み strategy)
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt share_history hist_ignore_dups hist_ignore_space extended_history
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 # Claude Code: 推論の深さを常に最大に設定
 # export CLAUDE_CODE_EFFORT_LEVEL=max
 
@@ -78,6 +85,16 @@ fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# carapace: 多シェル補完ブリッジ (compinit 後・sheldon source 前に初期化)
+if command -v carapace >/dev/null; then
+  export CARAPACE_BRIDGES='zsh,bash,fish'
+  source <(carapace _carapace)
+fi
+# fzf-tab 用の補完スタイル
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # Sheldon
 eval "$(sheldon source)"
